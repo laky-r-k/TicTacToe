@@ -13,20 +13,23 @@ def main(win):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 g.run=False
-            if event.type==pygame.MOUSEBUTTONDOWN:
+            elif event.type==pygame.MOUSEBUTTONDOWN:
                 pos=pygame.mouse.get_pos()
-                g.play(pos)
+                g.play_with_bot(pos)
                 if  g.exit_button.is_button_pressed(pos):
                     g.run=False
                 elif g.retry_button.is_button_pressed(pos):
                     g.reset()
+            elif event.type == pygame.USEREVENT:
+                g.bot_move()
+                pygame.time.set_timer(pygame.USEREVENT, 0) 
             
         win.fill([250,250,250])
         g.draw_board()  
         g.check_display()
         g.chance_display()
-        g.check_win()
-        g.check_tie()
+        g.check_win_tie()
+        
         
     
         pygame.display.update()
